@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.welcome-container {
+  padding: 24px;
+  width: 350px;
+  border: 2px dashed var(--terminal-green);
+}
+
+.info-text {
+  display: flex;
+  border-bottom: 1px solid;
+}
+
+b {
+  padding-left: 10px;
+  margin-left: auto;
+}

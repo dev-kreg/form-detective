@@ -1,0 +1,37 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-width: 350px;
+  border-right: 6px solid;
+  padding: 0 10px 0;
+}
+
+.header {
+  font-size: 38px;
+  text-align: center;
+}
+.footer {
+  font-size: 28px;
+  margin-top: auto;
+  text-align: center;
+}
+
+.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  color: white;
+}
+
+.route-btn {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  border: 4px outset grey;  
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.route-btn:hover {
+  border: 4px inset var(--terminal-green);
+  color: white;
+}
