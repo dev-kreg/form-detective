@@ -4,6 +4,7 @@
     --terminal-green: #a1eeae;
     --terminal-red: #ff8f8f;
     --terminal-bg: #0a0a0a;
+    overflow: hidden;
 }
 
 app-root {
@@ -74,7 +75,7 @@ button:focus {
 }
 
 /* CRT screen effect */
-body::before {
+body::after {
     content: '';
     position: fixed;
     top: 0;

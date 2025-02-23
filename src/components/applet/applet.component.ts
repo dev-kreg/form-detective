@@ -1,0 +1,87 @@
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+
+@Component({
+  selector: 'app-applet',
+  imports: [CommonModule],
+  templateUrl: './applet.component.html',
+  styleUrl: './applet.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppletComponent implements OnInit, AfterViewInit {
+  width = 600;
+  height = 200;
+
+  @Input() initialX = 100;
+  @Input() initialY = 200;
+  @Input() title: string = 'New window';
+  @Input() set focused(val: boolean) {
+    this.self.style.zIndex = val ? '1' : '0'
+    this.minimized = false;
+  }
+  private _minimized = false;
+  @Input() set minimized(val: boolean) {
+    this.self.style.display = val ? 'none' : 'block'
+    this._minimized = val;
+    this.minimize.emit();
+    this.viewUpdate.emit();
+  }
+  public get minimized(): boolean {
+    return this._minimized;
+  }
+
+
+  @Output() dragged = new EventEmitter();
+  @Output() minimize = new EventEmitter();
+  @Output() close = new EventEmitter();
+  @Output() viewUpdate = new EventEmitter();
+
+  self: HTMLElement;
+  constructor(private ref: ElementRef<HTMLElement>, private cdRef: ChangeDetectorRef) {
+    this.self = ref.nativeElement;
+    this.minimized = false;
+  }
+
+  ngOnInit(): void {
+    // this.self.style.width = `${this.width}px`;
+    // this.self.style.height = `${this.height}px`;
+    this.self.style.left = `${this.initialX}px`;
+    this.self.style.top = `${this.initialY}px`;
+  }
+
+  ngAfterViewInit() {
+    this.cdRef.detectChanges();
+  }
+
+  startDrag(event: MouseEvent) {
+    // Store the initial position of the element
+    const rect = this.self.getBoundingClientRect();
+
+    // Store the mouse position relative to the element
+    this.initialX = event.clientX - rect.left;
+    this.initialY = event.clientY - rect.top;
+
+    // Bind the handlers to this instance
+    const boundHandleDrag = this.handleDrag.bind(this);
+
+    // Add event listeners
+    document.addEventListener('mousemove', boundHandleDrag);
+    document.addEventListener('mouseup', () => {
+      document.removeEventListener('mousemove', boundHandleDrag);
+    }, { once: true });
+  }
+
+  handleDrag(event: MouseEvent) {
+    // Calculate new position while maintaining the initial offset
+    const newX = event.clientX - this.initialX;
+    const newY = event.clientY - this.initialY;
+
+    this.self.style.left = `${newX}px`;
+    this.self.style.top = `${newY}px`;
+    this.dragged.emit();
+  }
+
+  handleClose() {
+    this.close.emit();
+  }
+}

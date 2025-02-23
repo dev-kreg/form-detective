@@ -1,0 +1,11 @@
+<button (click)="addCalendar()">add cal</button>
+<button (click)="addWebpage()">add web</button>
+
+<div id="taskbar">
+    <button class="applet-instance" 
+            [ngClass]="window.instance.minimized ? 'minimized' : ''"
+            *ngFor="let window of windows" 
+            (click)="taskBarWindowClick(window)">
+        {{window.instance.title}}
+    </button>
+</div>

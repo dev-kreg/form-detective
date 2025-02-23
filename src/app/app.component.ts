@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Gooey } from 'ngx-gooey';
-import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +10,4 @@ import { AuthService } from '../services/auth.service';
 })
 export class AppComponent {
   title = 'form-detective';
-
-  constructor(private authSvc: AuthService) {
-    this.authSvc.checkCachedAuthToken();
-  }
 }
