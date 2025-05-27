@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+textarea{
+  min-width: 330px;
+  min-height: 200px;
+  margin: 0;
+}

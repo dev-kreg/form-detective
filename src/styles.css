@@ -39,6 +39,9 @@ button {
     font-family: 'Courier New', monospace;
     padding: 8px;
     min-width: 100px;
+    /* min-height: 47px;
+    width: min-content;
+    width: min-content; */
 }
 button.btn-loading:hover {
     background-color: var(--terminal-bg);

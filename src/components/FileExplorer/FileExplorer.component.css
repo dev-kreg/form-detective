@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+.actions {
+  display: flex;
+}
+
+.create-options {
+  display: none;    
+  position: absolute;
+  flex-direction: column;
+  left: 100px;
+}
+
+.create-options.expanded {
+  display: flex;
+}
+
+.file-explorer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.entry {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  .dir-expand {
+    width: 20px;
+  }
+  .entry-name {
+    width: 300px;
+  }
+  .entry-modified {
+    width: 105px;
+    font-size: 12px;
+  }
+}
+
+.entry:hover {
+  font-weight: bold;
+}
+
+.directory:before {
+  content: "\FF1E";
+  margin-left: -20px;
+}

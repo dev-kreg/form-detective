@@ -1,6 +1,6 @@
 
 import { Routes } from '@angular/router';
-import { DesktopComponent } from '../components/desktop/desktop.component';
+import { DesktopComponent } from '../components/Desktop/desktop.component';
 
 export const routes: Routes = [
     {

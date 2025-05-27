@@ -4,11 +4,23 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, E
 @Component({
   selector: 'app-applet',
   imports: [CommonModule],
-  templateUrl: './applet.component.html',
+  template: `
+  <span id="control-bar">
+    <div style="flex-grow: 1;" (mousedown)="startDrag($event)">
+        <p id="title">{{title}}</p>
+    </div>
+    <div>
+        <button class="control-btn" id="minimize" (click)="minimized = true">_</button>
+        <button class="control-btn" id="close" (click)="handleClose()">X</button>
+    </div>
+  </span>
+
+  <ng-content></ng-content>
+`,
   styleUrl: './applet.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppletComponent implements OnInit, AfterViewInit {
+export class AppletComponent implements OnInit {
   width = 600;
   height = 200;
 
@@ -37,20 +49,17 @@ export class AppletComponent implements OnInit, AfterViewInit {
   @Output() viewUpdate = new EventEmitter();
 
   self: HTMLElement;
+
   constructor(private ref: ElementRef<HTMLElement>, private cdRef: ChangeDetectorRef) {
     this.self = ref.nativeElement;
     this.minimized = false;
+    console.log('AppletComponent initialized');
+    
   }
 
   ngOnInit(): void {
-    // this.self.style.width = `${this.width}px`;
-    // this.self.style.height = `${this.height}px`;
     this.self.style.left = `${this.initialX}px`;
     this.self.style.top = `${this.initialY}px`;
-  }
-
-  ngAfterViewInit() {
-    this.cdRef.detectChanges();
   }
 
   startDrag(event: MouseEvent) {

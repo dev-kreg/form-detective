@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, ComponentRef, OnInit, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WindowService } from '../../window.service';
-import { AppletComponent } from '../applet/applet.component';
-import { CalendarComponent } from '../calendar/calendar.component';
-import { WebpageComponent } from '../webpage/webpage.component';
+import { WindowService } from '../../services/window.service';
+import { AppletComponent } from '../Applet/applet.component';
+import { CalendarComponent } from '../Calendar/calendar.component';
+import { TextEditorComponent } from '../TextEditor/TextEditor.component';
+import { FileExplorerComponent } from '../FileExplorer/FileExplorer.component';
 
 @Component({
   selector: 'app-desktop',
@@ -13,27 +14,24 @@ import { WebpageComponent } from '../webpage/webpage.component';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class DesktopComponent implements OnInit {
-  get windows() {
-    return this.windowService.getWindows();
-  }
+
+  commandMenuOpen = false;
 
   constructor(
     private viewContainerRef: ViewContainerRef,
     private windowService: WindowService
   ) { }
 
+  get windows() {
+    return this.windowService.getWindows();
+  }
+
   ngOnInit(): void {
     this.windowService.setViewContainerRef(this.viewContainerRef);
   }
 
-  addWebpage(): void {
-    this.windowService.createWindow({
-      title: 'Web Browser',
-      component: WebpageComponent,
-      inputs: {
-        url: 'https://www.reddit.com/'
-      }
-    });
+  openCommandMenu(): void {
+    this.commandMenuOpen = !this.commandMenuOpen;
   }
 
   addCalendar(): void {
@@ -43,6 +41,20 @@ export class DesktopComponent implements OnInit {
       inputs: {
         date: new Date()
       }
+    });
+  }
+
+  addTextEditor(): void {
+    this.windowService.createWindow({
+      title: 'Text Editor',
+      component: TextEditorComponent,
+    });
+  }
+
+  addFileExplorer(): void {
+    this.windowService.createWindow({
+      title: 'File Explorer',
+      component: FileExplorerComponent,
     });
   }
 

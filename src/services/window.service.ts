@@ -1,5 +1,5 @@
 import { Injectable, ComponentRef, ViewContainerRef, Type, createComponent, ApplicationRef, EnvironmentInjector } from '@angular/core';
-import { AppletComponent } from './components/applet/applet.component';
+import { AppletComponent } from '../components/Applet/applet.component';
 
 
 export interface WindowConfig<T> {

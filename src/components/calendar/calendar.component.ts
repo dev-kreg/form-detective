@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AppletComponent } from "../Applet/applet.component";
 
 interface CalendarDay {
   date: number;
@@ -12,40 +13,42 @@ interface CalendarDay {
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AppletComponent],
   template: `
-    <div class="calendar-container">
-      <div class="calendar-header">
-        <button (click)="previousMonth()">&lt;</button>
-        <div class="month-year">
-          {{ currentDate | date:'MMMM yyyy' }}
+    <app-applet title="Calendar">
+      <div class="calendar-container" body>
+        <div class="calendar-header">
+          <button (click)="previousMonth()">&lt;</button>
+          <div class="month-year">
+            {{ currentDate | date:'MMMM yyyy' }}
+          </div>
+          <button (click)="nextMonth()">&gt;</button>
         </div>
-        <button (click)="nextMonth()">&gt;</button>
-      </div>
-
-      <div class="weekdays">
-        <div *ngFor="let day of weekDays" class="weekday">{{ day }}</div>
-      </div>
-
-      <div class="calendar-grid">
-        <div *ngFor="let day of calendarDays" 
-             class="day" 
-             [class.other-month]="!day.isCurrentMonth"
-             [class.today]="day.isToday"
-             [class.selected]="day.isSelected"
-             (click)="selectDate(day)">
-          {{ day.date }}
+      
+        <div class="weekdays">
+          <div *ngFor="let day of weekDays" class="weekday">{{ day }}</div>
+        </div>
+      
+        <div class="calendar-grid">
+          <div *ngFor="let day of calendarDays" 
+               class="day" 
+               [class.other-month]="!day.isCurrentMonth"
+               [class.today]="day.isToday"
+               [class.selected]="day.isSelected"
+               (click)="selectDate(day)">
+            {{ day.date }}
+          </div>
+        </div>
+      
+        <div class="selected-date" *ngIf="selectedDate">
+          Selected: {{ selectedDate | date:'mediumDate' }}
         </div>
       </div>
-
-      <div class="selected-date" *ngIf="selectedDate">
-        Selected: {{ selectedDate | date:'mediumDate' }}
-      </div>
-    </div>
+    </app-applet>
   `,
   styleUrl: './calendar.component.css'
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent extends AppletComponent implements OnInit {
   @Input() set date(value: Date) {
     this.currentDate = new Date(value);
     this.generateCalendar();
@@ -56,7 +59,8 @@ export class CalendarComponent implements OnInit {
   selectedDate?: Date;
   calendarDays: CalendarDay[] = [];
 
-  ngOnInit() {
+  override ngOnInit() {
+    super.ngOnInit();
     this.generateCalendar();
   }
 
